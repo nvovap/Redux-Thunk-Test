@@ -25,11 +25,15 @@ function items(state = [], action) {
     switch (action.type) {
         case 'ITEMS_FETCH_DATA_SUCCESS':
             return action.items;
-
+        case 'ITEMS_DELETE_ELEMENT_SUCCESS':
+             var oldState = state;
+             oldState.splice(action.id, 1);
+            return oldState;
         default:
             return state;
     }
 }
+
 
 
 export default combineReducers({

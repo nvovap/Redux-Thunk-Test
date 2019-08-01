@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { itemsFetchData, errorAfterFiveSeconds } from '../redux/actions';
+import { itemsFetchData, errorAfterFiveSeconds, itemsDeleteElementSuccess } from '../redux/actions';
 
 
 const mapStateToProps = (state) => {
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (url) => dispatch(itemsFetchData(url)),
-        getErrorFive: () => dispatch(errorAfterFiveSeconds())
+        getErrorFive: () => dispatch(errorAfterFiveSeconds()),
+        deleteItem: (id) => dispatch(itemsDeleteElementSuccess(id))
     };
 };
 
@@ -23,8 +25,12 @@ class ItemList extends Component {
 
 
     componentDidMount() {
-            //this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
-       this.props.getErrorFive();
+        this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
+        //this.props.getErrorFive();
+    }
+
+    handlerClickDelete = (id) => {
+        this.props.deleteItem(id);
     }
 
     render() {
@@ -41,6 +47,7 @@ class ItemList extends Component {
                 {this.props.items.map((item) => (
                     <li key={item.id}>
                         {item.label}
+                        <button onClick={(e) => {this.handlerClickDelete(item.id)}}  className="deleteBtn linkBtn">Delete</button>
                     </li>
                 ))}
             </ul>

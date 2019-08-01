@@ -19,6 +19,18 @@ export function itemsFetchDataSuccess(items) {
     };
 }
 
+export function itemsDeleteElementSuccess(id) {
+    return {
+        type: 'ITEMS_DELETE_ELEMENT_SUCCESS',
+        id
+    };
+}
+
+export function itemsDeleteElement(id) {
+    return (dispatch) => {
+        dispatch(itemsDeleteElementSuccess(id));
+    }
+}
 
 export function itemsFetchData(url) {
     return (dispatch) => {
