@@ -26,6 +26,12 @@ export function itemsDeleteElementSuccess(id) {
     };
 }
 
+
+
+export const itemsEditElement = (item) => (dispatch) => {
+    dispatch({ type: 'ITEM_EDIT_ELEMENT', item});
+}
+
 export function itemsDeleteElement(id) {
     return (dispatch) => {
         dispatch(itemsDeleteElementSuccess(id));

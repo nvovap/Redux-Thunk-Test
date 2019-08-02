@@ -30,6 +30,11 @@ function items(state = [], action) {
              const index = oldState.findIndex(element => element.id === action.id);
              oldState.splice(index, 1);
             return oldState;
+        case 'ITEM_EDIT_ELEMENT':
+            var oldState2 = [...state];
+            const index2 = oldState2.findIndex(element => element.id === action.item.id);
+            oldState2[index2].name = action.item.name;
+            return oldState2;
         default:
             return state;
     }

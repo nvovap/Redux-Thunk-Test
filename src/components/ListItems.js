@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Item } from './Item';
 import { connect } from 'react-redux';
 import { itemsFetchData, errorAfterFiveSeconds, itemsDeleteElementSuccess } from '../redux/actions';
 
+import './ListItems.css'
 
 const mapStateToProps = (state) => {
     return {
@@ -25,6 +26,7 @@ class ItemList extends Component {
 
 
     componentDidMount() {
+        console.log("ListItems")
         this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
         //this.props.getErrorFive();
     }
@@ -43,14 +45,11 @@ class ItemList extends Component {
         }
 
         return (
-            <ul>
-                {this.props.items.map((item) => (
-                    <li key={item.id}>
-                        {item.label}
-                        <button onClick={(e) => {this.handlerClickDelete(item.id)}}  className="deleteBtn linkBtn">Delete</button>
-                    </li>
+            <div className='ListItem'>
+                {this.props.items.map((elem) => (
+                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} />
                 ))}
-            </ul>
+            </div>
         );
     }
 }
