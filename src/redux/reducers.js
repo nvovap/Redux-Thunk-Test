@@ -26,8 +26,9 @@ function items(state = [], action) {
         case 'ITEMS_FETCH_DATA_SUCCESS':
             return action.items;
         case 'ITEMS_DELETE_ELEMENT_SUCCESS':
-             var oldState = state;
-             oldState.splice(action.id, 1);
+             var oldState = [...state];
+             const index = oldState.findIndex(element => element.id === action.id);
+             oldState.splice(index, 1);
             return oldState;
         default:
             return state;
