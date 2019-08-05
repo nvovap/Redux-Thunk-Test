@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Item } from './Item';
+import  Item  from './Item';
 import { connect } from 'react-redux';
-import { itemsFetchData, errorAfterFiveSeconds, itemsDeleteElementSuccess } from '../redux/actions';
+import { itemsFetchData, errorAfterFiveSeconds, itemsDeleteElementSuccess, itemsEditElement } from '../redux/actions';
 
 import './ListItems.css'
 
@@ -18,7 +18,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (url) => dispatch(itemsFetchData(url)),
         getErrorFive: () => dispatch(errorAfterFiveSeconds()),
-        deleteItem: (id) => dispatch(itemsDeleteElementSuccess(id))
+        deleteItem: (id) => dispatch(itemsDeleteElementSuccess(id)),
+        itemsEditElement : ({id, name}) => dispatch(itemsEditElement({id, name}))
     };
 };
 
@@ -47,7 +48,7 @@ class ItemList extends Component {
         return (
             <div className='ListItem'>
                 {this.props.items.map((elem) => (
-                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} />
+                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} itemsEditElement={this.props.itemsEditElement} />
                 ))}
             </div>
         );
