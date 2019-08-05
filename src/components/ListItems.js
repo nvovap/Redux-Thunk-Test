@@ -36,6 +36,12 @@ class ItemList extends Component {
         this.props.deleteItem(id);
     }
 
+
+    handlerClickEdit = (id, name) => {
+        console.log('============ EDIT ==================');
+        this.props.itemsEditElement({id, name});
+    }
+
     render() {
         if (this.props.hasErrored) {
             return <p>Sorry! There was an error loading the items</p>;
@@ -48,7 +54,7 @@ class ItemList extends Component {
         return (
             <div className='ListItem'>
                 {this.props.items.map((elem) => (
-                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} itemsEditElement={this.props.itemsEditElement} />
+                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} itemsEditElement={this.handlerClickEdit} />
                 ))}
             </div>
         );
