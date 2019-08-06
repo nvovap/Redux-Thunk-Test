@@ -7,6 +7,13 @@ class Item extends Component {
 
     state = {
         showButtonDelete: false,
+        texEdit: "",
+    }
+
+    componentDidMount() {
+        this.setState({
+            texEdit: this.props.name
+        }) 
     }
 
     handleClick(e){
@@ -17,14 +24,13 @@ class Item extends Component {
     }
 
 
-  
-
+    
     
     render() {
         return <div className='Item' onClick={this.handleClick.bind(this)}>
-        {this.state.showButtonDelete ? <input name="name" placeholder="name" onChange={this.updateInput} value={this.props.name}></input> : <div>{this.props.name}</div>}
+        {this.state.showButtonDelete ? <input name="name" placeholder="name" onChange={this.updateInput} value={this.state.texEdit}></input> : <div>{this.props.name}</div>}
         {this.state.showButtonDelete && <button onClick={(e) => {this.props.clickDelete(this.props.id)}}  className="deleteBtn linkBtn">Delete</button>  }
-        {this.state.showButtonDelete && <button onClick={(e) => {this.props.itemsEditElement(this.props.id, "test edit")}}  className="doneBtn linkBtn">Done</button>}
+        {this.state.showButtonDelete && <button onClick={(e) => {this.props.itemsEditElement(this.props.id, this.state.texEdit)}}  className="doneBtn linkBtn">Done</button>}
     </div>
     }
 }  
