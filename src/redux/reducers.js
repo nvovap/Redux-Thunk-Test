@@ -33,7 +33,7 @@ function items(state = [], action) {
         case 'ITEM_EDIT_ELEMENT':
             var oldState2 = [...state];
             const index2 = oldState2.findIndex(element => element.id === action.item.id);
-            oldState2[index2].label = action.item.name;
+            oldState2[index2] = action.item;
             return oldState2;
         default:
             return state;

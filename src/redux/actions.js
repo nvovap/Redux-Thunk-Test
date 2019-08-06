@@ -28,8 +28,26 @@ export function itemsDeleteElementSuccess(id) {
 
 
 
-export const itemsEditElement = (item) => (dispatch) => {
-    dispatch({ type: 'ITEM_EDIT_ELEMENT', item});
+export const itemsEditElement = (url, item) => (dispatch) => {
+
+    const _url = ''+url+'/'+item.id;
+    fetch(_url, {
+			method: 'PUT',
+			body: JSON.stringify(item),
+			headers: {
+			  "Content-type": "application/json; charset=UTF-8"
+			}
+		}).then(response => {
+            if (response.status === 200)
+                return response.json();
+            else {
+                dispatch(itemsHasErrored(true))
+            }
+		}).then(json => {
+			dispatch({ type: 'ITEM_EDIT_ELEMENT', item});
+		}).catch(() => dispatch(itemsHasErrored(true)));
+
+    
 }
 
 export function itemsDeleteElement(id) {

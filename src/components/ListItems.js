@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
         fetchData: (url) => dispatch(itemsFetchData(url)),
         getErrorFive: () => dispatch(errorAfterFiveSeconds()),
         deleteItem: (id) => dispatch(itemsDeleteElementSuccess(id)),
-        itemsEditElement : ({id, name}) => dispatch(itemsEditElement({id, name}))
+        itemsEditElement : (url, item) => dispatch(itemsEditElement(url, item))
     };
 };
 
@@ -28,7 +28,7 @@ class ItemList extends Component {
 
     componentDidMount() {
         console.log("ListItems")
-        this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
+        this.props.fetchData('http://5d496e352d59e50014f2140c.mockapi.io/items');
         //this.props.getErrorFive();
     }
 
@@ -36,10 +36,35 @@ class ItemList extends Component {
         this.props.deleteItem(id);
     }
 
+    handlerClickEditLeftMiddleRight = () => {
+ 
+        this.props.items.map((elem) => {
+            if (elem.leftMiddleRight > 5000 && elem.leftMiddleRight <= 30000) {
+                elem.leftMiddleRight = 1;
+            } else if (elem.leftMiddleRight > 30000 && elem.leftMiddleRight <= 60000) {
+                elem.leftMiddleRight = 2;
+            } else if (elem.leftMiddleRight > 60000) {
+                elem.leftMiddleRight = 3;
+            }
+
+            this.props.itemsEditElement('http://5d496e352d59e50014f2140c.mockapi.io/items', elem);
+
+        })
+
+
+    }
+
 
     handlerClickEdit = (id, name) => {
         console.log('============ EDIT ==================');
-        this.props.itemsEditElement({id, name});
+
+        const index = this.props.items.findIndex(element => element.id === id);
+
+        const item = this.props.items[index];
+
+        item.label = name;
+
+        this.props.itemsEditElement('http://5d496e352d59e50014f2140c.mockapi.io/items', item);
     }
 
     render() {
@@ -53,8 +78,9 @@ class ItemList extends Component {
 
         return (
             <div className='ListItem'>
+                <button onClick={this.handlerClickEditLeftMiddleRight}>Edit </button>
                 {this.props.items.map((elem) => (
-                    <Item key={elem.id} id={elem.id} name={elem.label} clickDelete={this.handlerClickDelete} itemsEditElement={this.handlerClickEdit} />
+                    <Item key={elem.id} id={elem.id} name={elem.label} leftMiddleRight={elem.leftMiddleRight} icon={elem.icon} text={elem.text} clickDelete={this.handlerClickDelete} itemsEditElement={this.handlerClickEdit} />
                 ))}
             </div>
         );

@@ -1,5 +1,5 @@
 .Item {
-    border: 2px solid red;
-    height: 100px;
+    border: 2px solid rgb(157, 162, 173);
     margin: 10px;
+    width: 18rem;
 }
