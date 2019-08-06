@@ -55,7 +55,7 @@ class ItemList extends Component {
     }
 
 
-    handlerClickEdit = (id, name) => {
+    handlerClickEdit = ({id, name, leftMiddleRight}) => {
         console.log('============ EDIT ==================');
 
         const index = this.props.items.findIndex(element => element.id === id);
@@ -63,6 +63,8 @@ class ItemList extends Component {
         const item = this.props.items[index];
 
         item.label = name;
+
+        item.leftMiddleRight = leftMiddleRight
 
         this.props.itemsEditElement('http://5d496e352d59e50014f2140c.mockapi.io/items', item);
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, ButtonGroup} from 'react-bootstrap';
 
 
 import './Item.css'
@@ -32,6 +32,12 @@ class Item extends Component {
     }
 
 
+    updateSelect = (e) => {
+        this.setState({
+            leftMiddleRight: Number(e.target.value)
+        })
+    }
+
     updateInput = (e) => {
         this.setState({
             [e.target.name]: e.target.value
@@ -41,11 +47,14 @@ class Item extends Component {
     HandleClickButtonDone = (e) => {
         e.stopPropagation()
 
+        console.log(this.state)
+        //this.ref2.onPress()
+
         this.setState({
             showButtonDelete: false,
         })
 
-        this.props.itemsEditElement(this.props.id, this.state.texEdit)
+        this.props.itemsEditElement({id: this.props.id, name: this.state.texEdit, leftMiddleRight: this.state.leftMiddleRight})
 
     }
 
@@ -62,11 +71,11 @@ class Item extends Component {
                         <li className="list-group-item">{this.state.showButtonDelete ? <input name="texEdit" placeholder="label" onChange={this.updateInput} value={this.state.texEdit}></input> : <div>{this.props.name}</div>}</li>
                         
                         <li className="list-group-item">
-                        <div className="btn-group" role="group" aria-label="Basic example" onClick={e => e.stopPropagation()}>
-                            <Button ref={this.ref1} variant="secondary">Left</Button>
-                            <button id="not first" ref={this.ref2} type="button" className="btn btn-secondary">Middle</button>
-                            <button ref={this.ref3} type="button" className="btn btn-secondary first-child">Right</button>
-                        </div>
+                        <ButtonGroup  role="group" aria-label="Basic example" onClick={e => e.stopPropagation()}>
+                            <Button disabled={this.state.leftMiddleRight !== 1 && !this.state.showButtonDelete} value={1} onClick={this.updateSelect} active={this.state.leftMiddleRight === 1}  variant="secondary">Left</Button>
+                            <Button disabled={this.state.leftMiddleRight !== 2 && !this.state.showButtonDelete} value={2} onClick={this.updateSelect} active={this.state.leftMiddleRight === 2}  variant="secondary">Middle</Button>
+                            <Button disabled={this.state.leftMiddleRight !== 3 && !this.state.showButtonDelete} value={3} onClick={this.updateSelect} active={this.state.leftMiddleRight === 3}  variant="secondary">Right</Button>
+                        </ButtonGroup>
                         </li>
                         <li className="list-group-item">Vestibulum at eros</li>
                     </ul>
